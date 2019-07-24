@@ -1,18 +1,23 @@
 #ifndef __MC__
 #define __MC__
+
 #include <vector>
+
 using namespace std;
+
 class thermo_profile
 {
 private:
+	double T_max, T_min;
 	double T;
 	int period;
-	int current_period;
+	int iter;
 public:
-	void init(int Period);
-	double gen_T(int Current_period);
+	void init(int Period, double T_Max, double T_Min);
+	double gen_T(int Iter);
 	double gen_T();
 };
+
 class mc
 {
 private:
@@ -28,11 +33,13 @@ private:
 	double pre_ene;
 	double opt_ene;
 	double new_ene;
+	int kind_change, param_change;
 public:
 	void init(int &Num_kind, int Check_point, vector <int> &Num_param, vector <double> &Lambda, vector < vector <double> > &Ini_param, double Ini_ene);
-	void gen_param(vector < vector <double> > param);
-	void evaluate(thermo_profile& thermo, double ene);
-
+	void gen_param(vector < vector <double> >& param);
+	int evaluate(thermo_profile& thermo, double ene);
+	
+	void get_param_ene(vector < vector <double> >& Pre_param, vector < vector <double> >& Opt_param, double& Pre_ene, double& Opt_ene);
 	void print();
 };
 
