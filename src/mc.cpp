@@ -69,6 +69,14 @@ void mc :: gen_param(vector < vector <double> >& param)
 	param = new_param;
 }
 
+void mc :: gen_param_kind(vector < vector <double> >& param)
+{
+	kind_change = rand()%num_kind;
+	for(size_t t1 = 0; t1<num_param[kind_change]; t1++)
+		new_param[kind_change][t1] = pre_param[kind_change][t1] + ((rand()/(double)RAND_MAX)*2-1)*lambda[kind_change];
+	param = new_param;
+}
+
 int mc :: evaluate(thermo_profile& thermo, double ene)
 {
 	int if_accept;

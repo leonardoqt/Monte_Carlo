@@ -37,6 +37,7 @@ private:
 public:
 	void init(int &Num_kind, int Check_point, vector <int> &Num_param, vector <double> &Lambda, vector < vector <double> > &Ini_param, double Ini_ene);
 	void gen_param(vector < vector <double> >& param);
+	void gen_param_kind(vector < vector <double> >& param);
 	int evaluate(thermo_profile& thermo, double ene);
 	
 	void get_param_ene(vector < vector <double> >& Pre_param, vector < vector <double> >& Opt_param, double& Pre_ene, double& Opt_ene);

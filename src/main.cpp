@@ -23,9 +23,9 @@ int main()
 	mc mc1;
 	thermo_profile Tem1;
 	int T_max, T_min;
-	int period = 10000;
+	int period = 1000;
 	int num_kind = 3;
-	int check_point = 100;
+	int check_point = 30;
 	vector <int> num_param;
 	vector <double> lambda;
 	vector < vector <double> > param, target;
@@ -56,7 +56,7 @@ int main()
 	Tem1.init(period,T_max,T_min);
 	for(size_t t1=0; t1<1*period; t1++)
 	{
-		mc1.gen_param(param);
+		mc1.gen_param_kind(param);
 		ene = get_ene(param,target);
 		Tem1.gen_T(t1);
 		mc1.evaluate(Tem1,ene);
