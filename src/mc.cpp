@@ -63,6 +63,7 @@ void mc :: init(int &Num_kind, int Check_point, vector <int> &Num_param, vector 
 
 void mc :: gen_param(vector < vector <double> >& param)
 {
+	new_param = pre_param;
 	kind_change = rand()%num_kind;
 	param_change = rand()%num_param[kind_change];
 	new_param[kind_change][param_change] = pre_param[kind_change][param_change] + ((rand()/(double)RAND_MAX)*2-1)*lambda[kind_change];
@@ -71,6 +72,7 @@ void mc :: gen_param(vector < vector <double> >& param)
 
 void mc :: gen_param_kind(vector < vector <double> >& param)
 {
+	new_param = pre_param;
 	kind_change = rand()%num_kind;
 	for(size_t t1 = 0; t1<num_param[kind_change]; t1++)
 		new_param[kind_change][t1] = pre_param[kind_change][t1] + ((rand()/(double)RAND_MAX)*2-1)*lambda[kind_change];
