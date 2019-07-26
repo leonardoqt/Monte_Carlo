@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include <cstdlib>
 #include <cmath>
 #include "mc.h"
@@ -14,11 +15,18 @@ void thermo_profile :: init(int Period, double T_Max, double T_Min)
 	iter = 0;
 }
 
-double thermo_profile :: gen_T(int Iter)
+double thermo_profile :: gen_T(int Iter, string profile)
 {
 	iter = Iter%period;
-	// for linear decrease T
-	T = T_max - ((T_max-T_min)*iter)/(period-1);
+	if(profile.find("linear")!=string::npos)
+		T = T_max - ((T_max-T_min)*iter)/(period-1);
+	else if(profile.find("log")!=string::npos)
+		T = T_max*exp(log(T_min/T_max)*Iter/(period-1));
+	else
+	{
+		cout<<"Error, need to specify temperature profile";
+		exit(EXIT_FAILURE);
+	}
 	return T;
 }
 

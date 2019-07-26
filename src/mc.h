@@ -2,6 +2,7 @@
 #define __MC__
 
 #include <vector>
+#include <cstring>
 
 using namespace std;
 
@@ -14,7 +15,7 @@ private:
 	int iter;
 public:
 	void init(int Period, double T_Max, double T_Min);
-	double gen_T(int Iter);
+	double gen_T(int Iter,string profile);
 	double gen_T();
 };
 
