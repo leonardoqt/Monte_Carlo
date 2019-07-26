@@ -21,7 +21,14 @@ double thermo_profile :: gen_T(int Iter, string profile)
 	if(profile.find("linear")!=string::npos)
 		T = T_max - ((T_max-T_min)*iter)/(period-1);
 	else if(profile.find("log")!=string::npos)
-		T = T_max*exp(log(T_min/T_max)*Iter/(period-1));
+		T = T_max*exp(log(T_min/T_max)*iter/(period-1));
+	else if (profile.find("mixed")!=string::npos)
+	{
+		if (iter < period/2)
+			T = T_max - ((T_max-T_min)*iter)/(period-1);
+		else
+			T = (T_max+T_min)/2*exp(log(T_min*2/(T_max+T_min))*(iter-period/2)*2/(period-2));
+	}
 	else
 	{
 		cout<<"Error, need to specify temperature profile";
