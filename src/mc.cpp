@@ -131,12 +131,13 @@ int mc :: evaluate(thermo_profile& thermo, double ene)
 	return if_accept;
 }
 
-void mc :: get_param_ene(vector < vector <double> >& Pre_param, vector < vector <double> >& Opt_param, double& Pre_ene, double& Opt_ene)
+void mc :: get_param_ene(vector < vector <double> >& Pre_param, vector < vector <double> >& Opt_param, double& Pre_ene, double& Opt_ene, double& New_ene)
 {
 	Pre_param = pre_param;
 	Opt_param = opt_param;
 	Pre_ene = pre_ene;
 	Opt_ene = opt_ene;
+	New_ene = new_ene;
 }
 
 

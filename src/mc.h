@@ -41,7 +41,7 @@ public:
 	void gen_param_kind(vector < vector <double> >& param);
 	int evaluate(thermo_profile& thermo, double ene);
 	
-	void get_param_ene(vector < vector <double> >& Pre_param, vector < vector <double> >& Opt_param, double& Pre_ene, double& Opt_ene);
+	void get_param_ene(vector < vector <double> >& Pre_param, vector < vector <double> >& Opt_param, double& Pre_ene, double& Opt_ene, double& New_ene);
 	void print();
 };
 
