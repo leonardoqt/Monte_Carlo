@@ -130,9 +130,9 @@ int mc :: evaluate(thermo_profile& thermo, double ene)
 		num_run[kind_change] = 0;
 		num_accept[kind_change] = 0;
 		if (rate < 0.2)
-			lambda[kind_change]/=2;
+			lambda[kind_change]/=(1+(0.4-rate)/0.2);
 		else if (rate > 0.4)
-			lambda[kind_change]*=1.618;
+			lambda[kind_change]*=(1+(rate-0.4)/0.2);
 	}
 	
 	return if_accept;
