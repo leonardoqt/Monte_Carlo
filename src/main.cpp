@@ -3,7 +3,6 @@
 #include <cstdlib>
 #include <vector>
 #include <cmath>
-#include <chrono>
 #include "mc.h"
 
 using namespace std;
@@ -20,14 +19,12 @@ double get_ene(vector < vector <double> >& param)
 
 int main()
 {
-	chrono::high_resolution_clock::time_point now = chrono::high_resolution_clock::now();
-	srand(now.time_since_epoch().count());
 	mc mc1;
 	thermo_profile Tem1;
 	int T_max, T_min;
-	int num_kind = 3;
-	int check_point = 30;
-	int period = num_kind*check_point*10;
+	int num_kind = 2;
+	int check_point = 100;
+	int period = num_kind*check_point*200;
 	vector <int> num_param;
 	vector <double> lambda;
 	vector < vector <double> > param;
@@ -37,20 +34,15 @@ int main()
 	
 	for(size_t t1=0; t1<num_kind; t1++)
 	{
-		num_param.push_back(t1+2);
+		num_param.push_back((t1+1)*50);
 		lambda.push_back(1);
 	}
 	param.resize(num_kind);
-	count = 0.0;
 	for(size_t t1=0; t1<num_kind; t1++)
 		for(size_t t2=0; t2<num_param[t1]; t2++)
-		{
-			count += 1.0;
-			param[t1].push_back(0);
-			
-		}
+			param[t1].push_back(2);
 	ene = get_ene(param);
-	T_max = ene;
+	T_max = ene*1;
 	T_min = ene/10000;
 	
 	mc1.init(num_kind, check_point, num_param, lambda, param, ene);
@@ -64,7 +56,7 @@ int main()
 		if ((t1+1)%period==0)
 		{
 			mc1.get_param_ene(param,param,ene0,ene1,ene2);
-			cout<<fixed<<setprecision(6)<<setw(10)<<ene0<<setw(10)<<ene1<<setw(10)<<ene2<<endl;
+			cout<<fixed<<setprecision(6)<<setw(15)<<ene0<<setw(15)<<ene1<<setw(15)<<ene2<<endl;
 		}
 	}
 	mc1.print();
