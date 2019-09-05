@@ -26,6 +26,8 @@ private:
 	int check_point;
 	vector <int> num_param;
 	vector <double> lambda;
+	vector <double> max_param;
+	vector <double> min_param;
 	vector <int> num_run;
 	vector <int> num_accept;
 	vector < vector <double> > pre_param;
@@ -36,7 +38,7 @@ private:
 	double new_ene;
 	int kind_change, param_change;
 public:
-	void init(int &Num_kind, int Check_point, vector <int> &Num_param, vector <double> &Lambda, vector < vector <double> > &Ini_param, double Ini_ene);
+	void init(int &Num_kind, int Check_point, vector <int> &Num_param, vector <double> &Lambda, vector <double> &Max_param, vector <double> &Min_param, vector < vector <double> > &Ini_param, double Ini_ene);
 	void gen_param(vector < vector <double> >& param);
 	void gen_param_kind(vector < vector <double> >& param);
 	int evaluate(thermo_profile& thermo, double ene);

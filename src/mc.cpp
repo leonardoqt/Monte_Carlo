@@ -42,7 +42,7 @@ double thermo_profile :: gen_T()
 	return T;
 }
 
-void mc :: init(int &Num_kind, int Check_point, vector <int> &Num_param, vector <double> &Lambda, vector < vector <double> > &Ini_param, double Ini_ene)
+void mc :: init(int &Num_kind, int Check_point, vector <int> &Num_param, vector <double> &Lambda, vector <double> &Max_param, vector <double> &Min_param, vector < vector <double> > &Ini_param, double Ini_ene)
 {
 	//
 	num_kind = Num_kind;
@@ -50,12 +50,16 @@ void mc :: init(int &Num_kind, int Check_point, vector <int> &Num_param, vector 
 	//
 	num_param.resize(Num_kind);
 	lambda.resize(Num_kind);
+	max_param.resize(Num_kind);
+	min_param.resize(Num_kind);
 	num_run.resize(Num_kind);
 	num_accept.resize(Num_kind);
 	for(size_t t1=0; t1<Num_kind; t1++)
 	{
 		num_param[t1] = Num_param[t1];
 		lambda[t1] = Lambda[t1];
+		max_param[t1] = Max_param[t1];
+		min_param[t1] = Min_param[t1];
 		num_run[t1] = 0;
 		num_accept[t1] = 0;
 	}
@@ -82,6 +86,8 @@ void mc :: gen_param(vector < vector <double> >& param)
 	kind_change = rand()%num_kind;
 	param_change = rand()%num_param[kind_change];
 	new_param[kind_change][param_change] = pre_param[kind_change][param_change] + ((rand()/(double)RAND_MAX)*2-1)*lambda[kind_change];
+	while(new_param[kind_change][param_change] < min_param[kind_change] || new_param[kind_change][param_change] > max_param[kind_change])
+		new_param[kind_change][param_change] = pre_param[kind_change][param_change] + ((rand()/(double)RAND_MAX)*2-1)*lambda[kind_change];
 	param = new_param;
 }
 
@@ -91,6 +97,9 @@ void mc :: gen_param_kind(vector < vector <double> >& param)
 	kind_change = rand()%num_kind;
 	for(size_t t1 = 0; t1<num_param[kind_change]; t1++)
 		new_param[kind_change][t1] = pre_param[kind_change][t1] + ((rand()/(double)RAND_MAX)*2-1)*lambda[kind_change];
+	for(size_t t1 = 0; t1<num_param[kind_change]; t1++)
+		while(new_param[kind_change][t1] < min_param[kind_change] || new_param[kind_change][t1] > max_param[kind_change])
+			new_param[kind_change][t1] = pre_param[kind_change][t1] + ((rand()/(double)RAND_MAX)*2-1)*lambda[kind_change];
 	param = new_param;
 }
 
@@ -132,7 +141,11 @@ int mc :: evaluate(thermo_profile& thermo, double ene)
 		if (rate < 0.2)
 			lambda[kind_change]/=(1+(0.4-rate)/0.2);
 		else if (rate > 0.4)
+		{
 			lambda[kind_change]*=(1+(rate-0.4)/0.2);
+			if (lambda[kind_change] > max_param[kind_change] - min_param[kind_change])
+				lambda[kind_change] = max_param[kind_change] - min_param[kind_change];
+		}
 	}
 	
 	return if_accept;
