@@ -2,6 +2,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <cmath>
+#include <chrono>
 #include "mc.h"
 
 using namespace std;
@@ -37,6 +38,16 @@ double thermo_profile :: gen_T(int Iter, string profile)
 	return T;
 }
 
+double thermo_profile :: gen_T(int Iter)
+{
+	iter = Iter%period;
+	if (iter < period/2)
+		T = T_max - ((T_max-T_min)*iter)/(period-1);
+	else
+		T = (T_max+T_min)/2*exp(log(T_min*2/(T_max+T_min))*(iter-period/2)*2/(period-2));
+	return T;
+}
+
 double thermo_profile :: gen_T()
 {
 	return T;
@@ -44,6 +55,8 @@ double thermo_profile :: gen_T()
 
 void mc :: init(int &Num_kind, int Check_point, vector <int> &Num_param, vector <double> &Lambda, vector <double> &Max_param, vector <double> &Min_param, vector < vector <double> > &Ini_param, double Ini_ene)
 {
+	chrono::high_resolution_clock::time_point now = chrono::high_resolution_clock::now();
+	srand(now.time_since_epoch().count());
 	//
 	num_kind = Num_kind;
 	check_point = Check_point;
@@ -205,4 +218,8 @@ void mc :: print()
 	cout<<"Previous penalty                  : "<<pre_ene<<endl;
 	cout<<"Minimum penalty                   : "<<opt_ene<<endl;
 	cout<<"New penalty                       : "<<new_ene<<endl;
+}
+void mc :: print_ene()
+{
+	cout<<pre_ene<<'\t'<<opt_ene<<'\t'<<new_ene<<endl;
 }

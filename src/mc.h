@@ -16,6 +16,7 @@ private:
 public:
 	void init(int Period, double T_Max, double T_Min);
 	double gen_T(int Iter,string profile);
+	double gen_T(int Iter);
 	double gen_T();
 };
 
@@ -45,6 +46,7 @@ public:
 	
 	void get_param_ene(vector < vector <double> >& Pre_param, vector < vector <double> >& Opt_param, double& Pre_ene, double& Opt_ene, double& New_ene);
 	void print();
+	void print_ene();
 };
 
 #endif
