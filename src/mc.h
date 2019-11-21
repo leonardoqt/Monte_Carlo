@@ -2,7 +2,7 @@
 #define __MC__
 
 #include <vector>
-#include <cstring>
+#include <string>
 
 using namespace std;
 
